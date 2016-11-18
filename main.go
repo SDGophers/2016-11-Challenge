@@ -12,6 +12,20 @@ type UserData struct {
 	Phone    string `name:"phone" desc:"Phone number"`
 }
 
+type Field struct {
+	InputName string
+	Desc      string
+}
+
+type Form struct {
+	Heading string
+	Fields  []Field
+}
+
+func (f *Form) ParseFields(s interface{}) {
+
+}
+
 func main() {
 
 	http.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
@@ -20,12 +34,15 @@ func main() {
 	})
 
 	http.HandleFunc("/form", func(w http.ResponseWriter, r *http.Request) {
+		d := UserData{}
+		form := &Form{Heading: "User Information"}
+		form.ParseFields(d)
 
 		t, err := template.ParseFiles("tpl/form.html")
 		if nil != err {
 			log.Println(err)
 		}
-		t.Execute(w, nil)
+		t.Execute(w, form)
 
 	})
 
