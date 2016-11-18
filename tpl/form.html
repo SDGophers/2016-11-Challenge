@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form</title>
+	<style>
+		.form-container {
+		    display: flex;
+		    flex-direction: column;
+		    width: 400px;
+		    background-color: lightgrey;
+		    padding: 0 10px;
+		    margin-bottom: 5px;
+		}
+
+		.field {
+			display: flex;
+		    margin: 2px;
+		    padding: 5px;
+		}
+		.field div.desc {
+			flex: 1;
+		}
+		.field div.input {
+			flex: 2;
+		}
+		input {
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+<form action="/user" method="post">
+	<div class="form-container">
+		<h3>{{ .Heading }} </h3>
+		{{ range $field := .Fields }}
+			<div id="{{ $field.InputName}}" class="field">
+				<div class="desc"><label for="name">{{ $field.Desc }}</label></div>
+				<div class="input"><input type="text" name="{{ $field.InputName }}"></div>
+			</div>
+		{{ end }}
+	</div>
+	<button>Submit</button>
+</form>
+</body>
+</html>
